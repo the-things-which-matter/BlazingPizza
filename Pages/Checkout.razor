@@ -1,29 +1,16 @@
-```razor
+
 @page "/checkout"
 
 @inject OrderState OrderState
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 
-<div class="top-bar">
-    <a class="logo" href="">
-        <img src="img/logo.svg" />
-    </a>
-
-    <NavLink href="" class="nav-tab" Match="NavLinkMatch.All">
-        <img src="img/pizza-slice.svg" />
-        <div>Get Pizza</div>
-    </NavLink>
-
-    <NavLink href="myorders" class="nav-tab">
-        <img src="img/bike.svg" />
-        <div>My Orders</div>
-    </NavLink>
-</div>
-
 <div class="main">
+
     <div class="checkout-cols">
+
         <div class="checkout-order-details">
+
             <h4>Review order</h4>
 
             @foreach (var pizza in Order.Pizzas)
@@ -32,7 +19,7 @@
                     <strong>
                         @(pizza.Size)"
                         @pizza.Special.Name
-                        (£@pizza.GetFormattedTotalPrice())
+                        (UGX @pizza.GetFormattedTotalPrice())
                     </strong>
                 </p>
             }
@@ -40,10 +27,12 @@
             <p>
                 <strong>
                     Total price:
-                    £@Order.GetFormattedTotalPrice()
+                    UGX @Order.GetFormattedTotalPrice()
                 </strong>
             </p>
+
         </div>
+
     </div>
 
     <button class="checkout-button btn btn-warning"
@@ -51,6 +40,7 @@
             disabled="@isSubmitting">
         Place order
     </button>
+
 </div>
 
 @code {
@@ -70,7 +60,6 @@
 
         OrderState.ResetOrder();
 
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo($"myorders/{newOrderId}");
     }
 }
-```

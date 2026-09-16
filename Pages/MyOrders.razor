@@ -1,26 +1,11 @@
-```razor
+
 @page "/myorders"
 
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 
-<div class="top-bar">
-    <a class="logo" href="">
-        <img src="img/logo.svg" />
-    </a>
-
-    <NavLink href="" class="nav-tab" Match="NavLinkMatch.All">
-        <img src="img/pizza-slice.svg" />
-        <div>Get Pizza</div>
-    </NavLink>
-
-    <NavLink href="myorders" class="nav-tab">
-        <img src="img/bike.svg" />
-        <div>My Orders</div>
-    </NavLink>
-</div>
-
 <div class="main">
+
     @if (ordersWithStatus == null)
     {
         <text>Loading...</text>
@@ -36,12 +21,15 @@
             @foreach (var item in ordersWithStatus)
             {
                 <div class="list-group-item">
+
                     <div class="col">
                         <h5>@item.Order.CreatedTime.ToLongDateString()</h5>
+
                         Items:
                         <strong>@item.Order.Pizzas.Count()</strong>;
+
                         Total price:
-                        <strong>£@item.Order.GetFormattedTotalPrice()</strong>
+                        <strong>UGX @item.Order.GetFormattedTotalPrice()</strong>
                     </div>
 
                     <div class="col">
@@ -51,15 +39,18 @@
                     @if (item.StatusText != "Delivered")
                     {
                         <div class="col flex-grow-0">
-                            <a href="myorders/" class="btn btn-success">
+                            <a href="myorders/@item.Order.OrderId"
+                               class="btn btn-success">
                                 Track &gt;
                             </a>
                         </div>
                     }
+
                 </div>
             }
         </div>
     }
+
 </div>
 
 @code {
@@ -71,4 +62,3 @@
             $"{NavigationManager.BaseUri}orders");
     }
 }
-```
